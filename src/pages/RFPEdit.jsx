@@ -37,63 +37,95 @@ export default function RFPEdit() {
   ];
 
   return (
-    <div style={{ padding: "24px" }}>
-      <Group justify="space-between" align="center" style={{ marginBottom: "16px" }}>
+    <div style={{ padding: "32px", fontSize: "1.25rem", color: "#f1f1f1" }}>
+      <Group justify="space-between" align="center" mb="lg">
         <Group>
           <Button
             component={Link}
             to="/"
             variant="subtle"
-            leftSection={<IconArrowLeft style={{ width: 18, height: 18 }} />}
+            size="md"
+            leftSection={<IconArrowLeft size={20} />}
+            styles={{
+              label: { fontSize: "1.1rem", fontWeight: 500 }
+            }}
           >
             Back to Dashboard
           </Button>
-          <Title order={3}>Website Redesign for City X</Title>
-          <Badge color="orange">In Progress</Badge>
+          <Title order={2} style={{ fontSize: "2rem" }}>
+            Website Redesign for City X
+          </Title>
+          <Badge color="orange" size="lg" radius="sm">
+            IN PROGRESS
+          </Badge>
         </Group>
         <Group>
           <Button
             color="green"
-            leftSection={<IconCheck style={{ width: 16, height: 16 }} />}
+            size="md"
+            radius="xl"
+            leftSection={<IconCheck size={18} />}
+            styles={{
+              label: { fontSize: "1.1rem", fontWeight: 500 }
+            }}
           >
             Mark as Submitted
           </Button>
           <Button
             variant="outline"
             color="gray"
-            leftSection={<IconArchive style={{ width: 16, height: 16 }} />}
+            size="md"
+            radius="xl"
+            leftSection={<IconArchive size={18} />}
+            styles={{
+              label: { fontSize: "1.1rem", fontWeight: 500 }
+            }}
           >
             Archive
           </Button>
         </Group>
       </Group>
 
-      <Tabs value={activeTab} onChange={setActiveTab}>
+      <Tabs value={activeTab} onChange={setActiveTab} mb="lg" variant="outline">
         <Tabs.List>
-          <Tabs.Tab value="questions">Questions</Tabs.Tab>
-          <Tabs.Tab value="notes">Notes</Tabs.Tab>
-          <Tabs.Tab value="history">History</Tabs.Tab>
+          <Tabs.Tab value="questions" style={{ fontSize: "1.1rem" }}>Questions</Tabs.Tab>
+          <Tabs.Tab value="notes" style={{ fontSize: "1.1rem" }}>Notes</Tabs.Tab>
+          <Tabs.Tab value="history" style={{ fontSize: "1.1rem" }}>History</Tabs.Tab>
         </Tabs.List>
       </Tabs>
 
       {activeTab === "questions" && (
-        <ScrollArea style={{ marginTop: "24px" }}>
-          <Stack spacing="md">
+        <ScrollArea style={{ maxHeight: 'calc(100vh - 300px)' }}>
+          <Stack spacing="lg">
             {questions.map((q, i) => (
-              <Card key={q.id} withBorder padding="md" radius="md" shadow="sm">
-                <Text fw={600} mb="xs">
+              <Card key={q.id} withBorder p="xl" radius="md" shadow="sm" style={{ backgroundColor: "#1e1e1e" }}>
+                <Text fw={600} style={{ fontSize: "1.3rem", marginBottom: "12px" }}>
                   {i + 1}. {q.text}
                 </Text>
                 <Textarea
                   placeholder="Draft your response here..."
                   autosize
-                  minRows={4}
-                  style={{ marginBottom: "12px" }}
+                  minRows={5}
+                  size="md"
+                  styles={{
+                    input: {
+                      backgroundColor: "#f2f2f2",
+                      color: "#111",
+                      fontSize: "1.1rem",
+                      padding: "14px"
+                    },
+                  }}
+                  style={{ marginBottom: "16px" }}
                 />
                 <Button
                   variant="filled"
                   color="blue"
-                  leftSection={<IconCheck style={{ width: 14, height: 14 }} />}
+                  size="md"
+                  radius="xl"
+                  leftSection={<IconCheck size={16} />}
+                  styles={{
+                    label: { fontSize: "1rem", fontWeight: 600 }
+                  }}
                 >
                   Save
                 </Button>
@@ -104,14 +136,26 @@ export default function RFPEdit() {
       )}
 
       {activeTab === "notes" && (
-        <Card withBorder padding="md" style={{ marginTop: "24px" }}>
-          <Textarea placeholder="Add internal notes here..." minRows={6} autosize />
+        <Card withBorder p="xl" radius="md" style={{ backgroundColor: "#1e1e1e", marginTop: "24px" }}>
+          <Textarea
+            placeholder="Add internal notes here..."
+            minRows={6}
+            size="md"
+            styles={{
+              input: {
+                backgroundColor: "#f2f2f2",
+                color: "#111",
+                fontSize: "1.1rem",
+                padding: "14px"
+              },
+            }}
+          />
         </Card>
       )}
 
       {activeTab === "history" && (
-        <Card withBorder padding="md" style={{ marginTop: "24px" }}>
-          <Text size="sm" c="dimmed">
+        <Card withBorder p="xl" radius="md" style={{ backgroundColor: "#1e1e1e", marginTop: "24px" }}>
+          <Text size="md" c="dimmed">
             View changes, submission logs, and activity history for this RFP.
           </Text>
         </Card>

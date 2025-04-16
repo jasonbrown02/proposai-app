@@ -7,11 +7,9 @@ import {
   Text,
   Badge,
   SimpleGrid,
-  ActionIcon,
 } from '@mantine/core';
 import { IconPlus, IconCheck } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
-import { rem } from '@mantine/styles';
 
 function Dashboard() {
   const rfps = [
@@ -39,49 +37,69 @@ function Dashboard() {
   };
 
   return (
-    <>
-      <Group justify="space-between" mb="lg">
-        <Title order={3}>Active RFPs</Title>
-        <Button leftSection={<IconPlus style={{ width: rem(18), height: rem(18) }} />}>
+    <div style={{ padding: '32px' }}>
+      <Group justify="space-between" mb="xl">
+        <Title order={1} style={{ fontSize: '2.25rem' }}>Active RFPs</Title>
+        <Button
+          component={Link}
+          to="/rfp-edit/new"
+          size="lg"
+          radius="xl"
+          color="blue"
+          leftSection={<IconPlus size={20} />}
+        >
           New RFP Response
         </Button>
       </Group>
 
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
+      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl">
         {rfps.map((rfp) => (
-          <Card shadow="sm" padding="lg" radius="md" withBorder key={rfp.id}>
-            <Group justify="space-between" align="center">
-              <Text fw={500}>{rfp.name}</Text>
-              <Badge color={statusColor[rfp.status]}>{rfp.status.toUpperCase()}</Badge>
+          <Card
+            key={rfp.id}
+            withBorder
+            shadow="sm"
+            radius="md"
+            p="xl"
+            style={{ fontSize: '1.125rem' }}
+          >
+            <Group justify="space-between" align="center" mb="sm">
+              <Text fw={600} style={{ fontSize: '1.25rem' }}>
+                {rfp.name}
+              </Text>
+              <Badge size="lg" color={statusColor[rfp.status]} variant="filled">
+                {rfp.status.toUpperCase()}
+              </Badge>
             </Group>
-            <Text size="sm" c="dimmed" mt="sm">
+
+            <Text size="md" c="dimmed">
               ID: {rfp.id} · {rfp.questions} Questions · Due {rfp.due}
             </Text>
-            <Text size="xs" c="dimmed" mt={4}>
+            <Text size="sm" c="dimmed" mt={4}>
               Last Processed: {rfp.lastProcessed}
             </Text>
 
-            <Group mt="md">
+            <Group mt="xl" spacing="md">
               <Button
                 component={Link}
                 to={`/rfp-edit/${rfp.id}`}
-                size="xs"
-                variant="light"
-                leftSection={<IconCheck style={{ width: rem(14), height: rem(14) }} />}
+                size="md"
+                radius="xl"
+                color="blue"
+                leftSection={<IconCheck size={16} />}
               >
                 Edit
               </Button>
-              <Button size="xs" variant="light" color="gray" disabled>
+              <Button size="md" radius="xl" color="gray" variant="light" disabled>
                 Archive
               </Button>
-              <Button size="xs" variant="subtle" color="green">
+              <Button size="md" radius="xl" color="green" variant="light">
                 Mark as Won
               </Button>
             </Group>
           </Card>
         ))}
       </SimpleGrid>
-    </>
+    </div>
   );
 }
 
