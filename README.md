@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# ProposAI App
+
+ProposAI is a React-based web application that helps users create, manage, and optimize business proposals using AI assistance. The application features a modern UI built with Mantine UI components and Tailwind CSS for styling.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
