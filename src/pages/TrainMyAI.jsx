@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Title,
-  Container,
   TextInput,
   Textarea,
   Checkbox,
@@ -13,19 +12,44 @@ import {
 
 function TrainMyAI() {
   return (
-    <Container size="sm">
-      <Box mt="xl" mb="md">
-        <Title order={2}>Train My AI</Title>
+    <Box p="lg">
+      <Box mb="lg">
+        <Title order={2} style={{ color: 'var(--mantine-color-text)' }}>
+          Train My AI
+        </Title>
       </Box>
 
-      <Stack spacing="md">
-        <TextInput label="Full Name" placeholder="Jane Doe" />
-        <Textarea label="Short Bio" placeholder="Tell us about yourself..." minRows={3} />
-        <TextInput label="LinkedIn URL" placeholder="https://linkedin.com/in/you" />
-        <TextInput label="Website / Portfolio" placeholder="https://yourportfolio.com" />
+      <Stack spacing="lg">
+        <TextInput
+          label="Full Name"
+          placeholder="Jane Doe"
+          size="md"
+        />
 
-        <Checkbox.Group label="Preferred Tone" description="How should the AI sound?">
-          <Group mt="xs">
+        <Textarea
+          label="Short Bio"
+          placeholder="Tell us about yourself..."
+          minRows={4}
+          size="md"
+        />
+
+        <TextInput
+          label="LinkedIn URL"
+          placeholder="https://linkedin.com/in/you"
+          size="md"
+        />
+
+        <TextInput
+          label="Website / Portfolio"
+          placeholder="https://yourportfolio.com"
+          size="md"
+        />
+
+        <Checkbox.Group
+          label="Preferred Tone"
+          description="How should the AI sound?"
+        >
+          <Group mt="xs" spacing="md">
             <Checkbox value="professional" label="Professional" />
             <Checkbox value="friendly" label="Friendly" />
             <Checkbox value="confident" label="Confident" />
@@ -33,9 +57,17 @@ function TrainMyAI() {
           </Group>
         </Checkbox.Group>
 
-        <Button fullWidth color="blue">Save My Profile</Button>
+        <Group position="right">
+          <Button
+            color="orange"
+            radius="xl"
+            size="md"
+          >
+            Save My Profile
+          </Button>
+        </Group>
       </Stack>
-    </Container>
+    </Box>
   );
 }
 

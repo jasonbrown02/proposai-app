@@ -16,42 +16,84 @@ import { IconSettings } from '@tabler/icons-react';
 
 function Settings() {
   return (
-    <Box style={{ padding: '24px' }}>
-      <Box style={{ marginBottom: '24px' }}>
-        <Title order={2} style={{ marginBottom: '12px' }}>
+    <Box p="lg">
+      <Box mb="lg">
+        <Title order={2} style={{ color: 'var(--mantine-color-text)' }}>
           Settings
         </Title>
-        <Text color="dimmed">Customize your ProposAI experience</Text>
+        <Text size="sm" c="dimmed">
+          Customize your ProposAI experience
+        </Text>
       </Box>
 
-      <Group align="flex-start" spacing="xl" grow>
-        <Paper shadow="xs" padding="md" withBorder>
-          <Title order={4} style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <IconSettings size={20} color="purple" />
+      <Stack spacing="lg">
+        <Paper
+          shadow="xs"
+          p="lg"
+          radius="md"
+          withBorder
+          style={{ backgroundColor: 'var(--mantine-color-body)' }}
+        >
+          <Title
+            order={4}
+            mb="sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--mantine-color-text)' }}
+          >
+            <IconSettings size={20} />
             Account Settings
           </Title>
-          <Divider style={{ marginBottom: '16px' }} />
+
+          <Divider mb="md" />
 
           <Stack spacing="md">
-            <TextInput label="Full Name" placeholder="Jason Brown" />
-            <TextInput label="Email Address" placeholder="jason@example.com" />
-            <TextInput label="Company" placeholder="Your Company" />
-            <Button mt="sm">Save Changes</Button>
+            <TextInput
+              label="Full Name"
+              placeholder="Jason Brown"
+              size="md"
+            />
+            <TextInput
+              label="Email Address"
+              placeholder="jason@example.com"
+              size="md"
+            />
+            <TextInput
+              label="Company"
+              placeholder="Your Company"
+              size="md"
+            />
+            <Group position="right" mt="sm">
+              <Button radius="xl" color="orange">
+                Save Changes
+              </Button>
+            </Group>
           </Stack>
         </Paper>
 
-        <Paper shadow="xs" padding="md" withBorder>
-          <Title order={4} style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <IconSettings size={20} color="purple" />
+        <Paper
+          shadow="xs"
+          p="lg"
+          radius="md"
+          withBorder
+          style={{ backgroundColor: 'var(--mantine-color-body)' }}
+        >
+          <Title
+            order={4}
+            mb="sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--mantine-color-text)' }}
+          >
+            <IconSettings size={20} />
             Preferences
           </Title>
-          <Divider style={{ marginBottom: '16px' }} />
+
+          <Divider mb="md" />
 
           <Stack spacing="md">
             <Group position="apart">
               <Box>
-                <Text fw={500}>Dark Mode</Text>
-                <Text size="xs" color="dimmed">
+                <Text fw={600} style={{ color: 'var(--mantine-color-text)' }}>
+                  Dark Mode
+                </Text>
+                <Text size="xs" c="dimmed">
                   Switch between light and dark themes
                 </Text>
               </Box>
@@ -61,6 +103,7 @@ function Settings() {
             <Select
               label="Default Language"
               placeholder="Select language"
+              size="md"
               data={[
                 { value: 'en', label: 'English' },
                 { value: 'es', label: 'Spanish' },
@@ -70,18 +113,24 @@ function Settings() {
 
             <Group position="apart">
               <Box>
-                <Text fw={500}>Email Notifications</Text>
-                <Text size="xs" color="dimmed">
+                <Text fw={600} style={{ color: 'var(--mantine-color-text)' }}>
+                  Email Notifications
+                </Text>
+                <Text size="xs" c="dimmed">
                   Receive updates and suggestions
                 </Text>
               </Box>
               <Switch defaultChecked />
             </Group>
 
-            <Button mt="sm">Save Preferences</Button>
+            <Group position="right" mt="sm">
+              <Button radius="xl" color="orange">
+                Save Preferences
+              </Button>
+            </Group>
           </Stack>
         </Paper>
-      </Group>
+      </Stack>
     </Box>
   );
 }

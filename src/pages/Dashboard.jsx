@@ -1,106 +1,103 @@
+// src/pages/Dashboard.jsx
 import React from 'react';
 import {
   Title,
   Button,
-  Card,
+  Badge,
+  Stack,
   Group,
   Text,
-  Badge,
-  SimpleGrid,
+  Box,
+  Paper,
+  Flex,
 } from '@mantine/core';
-import { IconPlus, IconCheck } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
 
-function Dashboard() {
-  const rfps = [
-    {
-      id: '0411-0357',
-      name: 'Website Redesign for City X',
-      questions: 12,
-      due: '2025-04-30',
-      lastProcessed: '2025-04-11',
-      status: 'in progress',
-    },
-    {
-      id: '0411-0352',
-      name: 'Logo Design for Green Co-op',
-      questions: 8,
-      due: '2025-04-15',
-      lastProcessed: '2025-04-10',
-      status: 'submitted',
-    },
-  ];
+const mockRFPs = [
+  {
+    id: '0411-0357',
+    title: 'Website Redesign for City X',
+    questions: 12,
+    dueDate: '2025-04-30',
+    lastProcessed: '2025-04-11',
+    status: 'IN PROGRESS',
+  },
+  {
+    id: '0411-0352',
+    title: 'Logo Design for Green Co-op',
+    questions: 8,
+    dueDate: '2025-04-15',
+    lastProcessed: '2025-04-10',
+    status: 'SUBMITTED',
+  },
+];
 
-  const statusColor = {
-    'in progress': 'orange',
-    submitted: 'green',
-  };
+const statusColors = {
+  'IN PROGRESS': 'orange',
+  SUBMITTED: 'green',
+};
 
+export default function Dashboard() {
   return (
-    <div style={{ padding: '32px' }}>
-      <Group justify="space-between" mb="xl">
-        <Title order={1} style={{ fontSize: '2.25rem' }}>Active RFPs</Title>
-        <Button
-          component={Link}
-          to="/rfp-edit/new"
-          size="lg"
-          radius="xl"
-          color="blue"
-          leftSection={<IconPlus size={20} />}
-        >
-          New RFP Response
-        </Button>
+    <Box p="lg">
+      <Group justify="space-between" align="center" mb="lg">
+        <Title order={2} style={{ color: 'var(--mantine-color-text)' }}>
+          Active RFPs
+        </Title>
       </Group>
 
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl">
-        {rfps.map((rfp) => (
-          <Card
+      <Stack spacing="lg">
+        {mockRFPs.map((rfp) => (
+          <Paper
             key={rfp.id}
-            withBorder
-            shadow="sm"
+            p="lg"
             radius="md"
-            p="xl"
-            style={{ fontSize: '1.125rem' }}
+            withBorder
+            style={{
+              backgroundColor: 'var(--mantine-color-body)',
+              position: 'relative',
+            }}
           >
-            <Group justify="space-between" align="center" mb="sm">
-              <Text fw={600} style={{ fontSize: '1.25rem' }}>
-                {rfp.name}
-              </Text>
-              <Badge size="lg" color={statusColor[rfp.status]} variant="filled">
-                {rfp.status.toUpperCase()}
-              </Badge>
-            </Group>
+            <Flex justify="space-between" align="flex-start" wrap="wrap">
+              <Box>
+                <Title order={4} style={{ color: 'var(--mantine-color-text)' }}>
+                  {rfp.title}
+                </Title>
+                <Text size="sm" mt={4} style={{ color: 'var(--mantine-color-text)' }}>
+                  ID: {rfp.id} • {rfp.questions} Questions • Due {rfp.dueDate}
+                </Text>
+                <Text size="xs" mt={2} style={{ color: 'var(--mantine-color-text)' }}>
+                  Last Processed: {rfp.lastProcessed}
+                </Text>
+              </Box>
 
-            <Text size="md" c="dimmed">
-              ID: {rfp.id} · {rfp.questions} Questions · Due {rfp.due}
-            </Text>
-            <Text size="sm" c="dimmed" mt={4}>
-              Last Processed: {rfp.lastProcessed}
-            </Text>
-
-            <Group mt="xl" spacing="md">
-              <Button
-                component={Link}
-                to={`/rfp-edit/${rfp.id}`}
-                size="md"
+              <Badge
+                color={statusColors[rfp.status]}
+                size="lg"
                 radius="xl"
-                color="blue"
-                leftSection={<IconCheck size={16} />}
+                style={{
+                  alignSelf: 'flex-start',
+                  fontWeight: 600,
+                  marginTop: 4,
+                }}
               >
+                {rfp.status}
+              </Badge>
+            </Flex>
+
+            <Group mt="md">
+              <Button variant="filled" color="orange" radius="xl">
                 Edit
               </Button>
-              <Button size="md" radius="xl" color="gray" variant="light" disabled>
+              <Button variant="filled" color="gray" radius="xl">
                 Archive
               </Button>
-              <Button size="md" radius="xl" color="green" variant="light">
+              <Button variant="filled" color="gray" radius="xl">
                 Mark as Won
               </Button>
             </Group>
-          </Card>
+          </Paper>
         ))}
-      </SimpleGrid>
-    </div>
+      </Stack>
+    </Box>
   );
 }
-
-export default Dashboard;

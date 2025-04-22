@@ -9,10 +9,11 @@ import {
   Tabs,
   ScrollArea,
   Stack,
+  Box,
 } from "@mantine/core";
-import { IconArrowLeft, IconCheck, IconArchive } from "@tabler/icons-react";
+import { IconCheck, IconArchive } from "@tabler/icons-react";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function RFPEdit() {
   const [activeTab, setActiveTab] = useState("questions");
@@ -37,37 +38,28 @@ export default function RFPEdit() {
   ];
 
   return (
-    <div style={{ padding: "32px", fontSize: "1.25rem", color: "#f1f1f1" }}>
-      <Group justify="space-between" align="center" mb="lg">
+    <Box p="lg">
+      <Stack spacing="xs" mb="lg">
+        <Badge
+          color="orange"
+          size="lg"
+          radius="sm"
+          style={{ alignSelf: "flex-start", fontWeight: 600 }}
+        >
+          IN PROGRESS
+        </Badge>
+
+        <Title order={2} style={{ fontSize: "2rem", color: "var(--mantine-color-text)" }}>
+          Website Redesign for City X
+        </Title>
+
         <Group>
           <Button
-            component={Link}
-            to="/"
-            variant="subtle"
-            size="md"
-            leftSection={<IconArrowLeft size={20} />}
-            styles={{
-              label: { fontSize: "1.1rem", fontWeight: 500 }
-            }}
-          >
-            Back to Dashboard
-          </Button>
-          <Title order={2} style={{ fontSize: "2rem" }}>
-            Website Redesign for City X
-          </Title>
-          <Badge color="orange" size="lg" radius="sm">
-            IN PROGRESS
-          </Badge>
-        </Group>
-        <Group>
-          <Button
-            color="green"
             size="md"
             radius="xl"
-            leftSection={<IconCheck size={18} />}
-            styles={{
-              label: { fontSize: "1.1rem", fontWeight: 500 }
-            }}
+            color="gray"
+            variant="filled"
+            leftSection={<IconCheck size={16} />}
           >
             Mark as Submitted
           </Button>
@@ -76,15 +68,12 @@ export default function RFPEdit() {
             color="gray"
             size="md"
             radius="xl"
-            leftSection={<IconArchive size={18} />}
-            styles={{
-              label: { fontSize: "1.1rem", fontWeight: 500 }
-            }}
+            leftSection={<IconArchive size={16} />}
           >
             Archive
           </Button>
         </Group>
-      </Group>
+      </Stack>
 
       <Tabs value={activeTab} onChange={setActiveTab} mb="lg" variant="outline">
         <Tabs.List>
@@ -98,8 +87,8 @@ export default function RFPEdit() {
         <ScrollArea style={{ maxHeight: 'calc(100vh - 300px)' }}>
           <Stack spacing="lg">
             {questions.map((q, i) => (
-              <Card key={q.id} withBorder p="xl" radius="md" shadow="sm" style={{ backgroundColor: "#1e1e1e" }}>
-                <Text fw={600} style={{ fontSize: "1.3rem", marginBottom: "12px" }}>
+              <Card key={q.id} withBorder p="xl" radius="md" style={{ backgroundColor: "var(--mantine-color-body)" }}>
+                <Text fw={600} style={{ fontSize: "1.3rem", marginBottom: "12px", color: "var(--mantine-color-text)" }}>
                   {i + 1}. {q.text}
                 </Text>
                 <Textarea
@@ -119,10 +108,9 @@ export default function RFPEdit() {
                 />
                 <Button
                   variant="filled"
-                  color="blue"
+                  color="orange"
                   size="md"
                   radius="xl"
-                  leftSection={<IconCheck size={16} />}
                   styles={{
                     label: { fontSize: "1rem", fontWeight: 600 }
                   }}
@@ -136,7 +124,7 @@ export default function RFPEdit() {
       )}
 
       {activeTab === "notes" && (
-        <Card withBorder p="xl" radius="md" style={{ backgroundColor: "#1e1e1e", marginTop: "24px" }}>
+        <Card withBorder p="xl" radius="md" style={{ backgroundColor: "var(--mantine-color-body)", marginTop: "24px" }}>
           <Textarea
             placeholder="Add internal notes here..."
             minRows={6}
@@ -154,12 +142,12 @@ export default function RFPEdit() {
       )}
 
       {activeTab === "history" && (
-        <Card withBorder p="xl" radius="md" style={{ backgroundColor: "#1e1e1e", marginTop: "24px" }}>
+        <Card withBorder p="xl" radius="md" style={{ backgroundColor: "var(--mantine-color-body)", marginTop: "24px" }}>
           <Text size="md" c="dimmed">
             View changes, submission logs, and activity history for this RFP.
           </Text>
         </Card>
       )}
-    </div>
+    </Box>
   );
 }

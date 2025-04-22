@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
 import Dashboard from './pages/Dashboard.jsx';
 import AISuggestions from './pages/AISuggestions.jsx';
 import Settings from './pages/Settings.jsx';
 import RFPEdit from './pages/RFPEdit.jsx';
 import TrainMyAI from './pages/TrainMyAI.jsx';
+import CreateRFP from './pages/CreateRFP.jsx';
+import RFPResponses from './pages/RFPResponses.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
-import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
+import { theme } from './theme.js';
+import ButtonStyles from './styles/ButtonStyles.js';
 
 function App() {
   const [colorScheme, setColorScheme] = useState('dark');
@@ -29,10 +33,9 @@ function App() {
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
-        theme={{
-          colorScheme,
-          primaryColor: 'blue',
-          fontFamily: 'Inter, sans-serif',
+        theme={{ ...theme, colorScheme }}
+        styles={{
+          Button: ButtonStyles,
         }}
       >
         <BrowserRouter>
@@ -42,6 +45,22 @@ function App() {
               element={
                 <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                   <Dashboard />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/create-rfp"
+              element={
+                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                  <CreateRFP />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/rfp-responses"
+              element={
+                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                  <RFPResponses />
                 </MainLayout>
               }
             />
@@ -62,18 +81,18 @@ function App() {
               }
             />
             <Route
-              path="/rfp-edit/:id"
-              element={
-                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-                  <RFPEdit />
-                </MainLayout>
-              }
-            />
-            <Route
               path="/train-my-ai"
               element={
                 <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                   <TrainMyAI />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/rfp-edit/:id"
+              element={
+                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                  <RFPEdit />
                 </MainLayout>
               }
             />

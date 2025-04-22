@@ -1,124 +1,97 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  Title,
-  Text,
-  TextInput,
-  Textarea,
+  Box,
   Button,
-  Paper,
+  Card,
   Group,
+  Stack,
+  Text,
+  Textarea,
+  Title,
 } from '@mantine/core';
-import { IconBrain, IconSend } from '@tabler/icons-react';
 
 function AISuggestions() {
+  const [responses, setResponses] = useState([
+    {
+      id: 1,
+      question: 'What is your technical approach?',
+      draft: '',
+    },
+    {
+      id: 2,
+      question: 'Describe your team’s qualifications.',
+      draft: '',
+    },
+  ]);
+
+  const handleDraftChange = (id, value) => {
+    setResponses((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, draft: value } : r))
+    );
+  };
+
+  const handleSave = (id) => {
+    console.log('Saved draft for response:', id);
+  };
+
   return (
-    <div style={{ padding: '24px' }}>
-      <div style={{ marginBottom: '24px' }}>
-        <Title order={2} style={{ marginBottom: '12px', fontSize: '2.2rem' }}>
-          AI Suggestions
-        </Title>
-        <Text style={{ color: '#555', fontSize: '1.3rem' }}>
-          Get intelligent proposal suggestions based on your requirements
-        </Text>
-      </div>
+    <Box p="lg">
+      <Title order={2} mb="lg" style={{ color: 'var(--mantine-color-text)' }}>
+        AI Suggestions
+      </Title>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '24px' }}>
-        <Paper shadow="xs" p="md" withBorder>
-          <Title order={4} style={{ marginBottom: '16px', fontSize: '1.4rem' }}>
-            Input Requirements
-          </Title>
-          <form>
-            <TextInput
-              label="Project Title"
-              placeholder="Enter project title"
-              style={{ marginBottom: '16px' }}
-              size="md"
-              styles={{
-                input: {
-                  backgroundColor: '#f0f0f0',
-                  color: '#111',
-                  fontSize: '16px',
-                },
-              }}
-            />
-            <Textarea
-              label="Project Description"
-              placeholder="Describe your project requirements"
-              minRows={4}
-              style={{ marginBottom: '16px' }}
-              size="md"
-              styles={{
-                input: {
-                  backgroundColor: '#f0f0f0',
-                  color: '#111',
-                  fontSize: '16px',
-                },
-              }}
-            />
-            <TextInput
-              label="Budget Range"
-              placeholder="e.g. $5,000 - $10,000"
-              style={{ marginBottom: '16px' }}
-              size="md"
-              styles={{
-                input: {
-                  backgroundColor: '#f0f0f0',
-                  color: '#111',
-                  fontSize: '16px',
-                },
-              }}
-            />
-            <TextInput
-              label="Timeline"
-              placeholder="e.g. 2 weeks, 3 months"
-              style={{ marginBottom: '16px' }}
-              size="md"
-              styles={{
-                input: {
-                  backgroundColor: '#f0f0f0',
-                  color: '#111',
-                  fontSize: '16px',
-                },
-              }}
-            />
-            <Button
-              leftSection={<IconSend size={16} />}
-              fullWidth
-              size="md"
-              radius="xl"
-            >
-              Generate Suggestions
-            </Button>
-          </form>
-        </Paper>
-
-        <Paper shadow="xs" p="md" withBorder>
-          <Group justify="space-between" style={{ marginBottom: '16px' }}>
-            <Title order={4} style={{ fontSize: '1.4rem' }}>AI Generated Proposal</Title>
-            <IconBrain size={24} style={{ color: '#228be6' }} />
-          </Group>
-
-          <div
+      <Stack spacing="lg">
+        {responses.map((response) => (
+          <Card
+            key={response.id}
+            p="lg"
+            radius="md"
+            withBorder
             style={{
-              backgroundColor: '#fafafa',
-              padding: '16px',
-              borderRadius: '8px',
-              minHeight: '400px',
-              marginBottom: '16px',
+              backgroundColor: 'var(--mantine-color-body)',
+              borderColor: '#2c2c2c',
             }}
           >
-            <Text style={{ fontSize: '1.2rem', color: '#888', fontStyle: 'italic' }}>
-              Your AI-generated proposal will appear here after you submit your requirements.
+            <Text
+              size="lg"
+              fw={600}
+              mb="xs"
+              style={{ color: 'var(--mantine-color-text)' }}
+            >
+              {response.id}. {response.question}
             </Text>
-          </div>
 
-          <Group justify="flex-end">
-            <Button variant="outline" size="md" radius="xl">Save as Draft</Button>
-            <Button size="md" radius="xl">Export as PDF</Button>
-          </Group>
-        </Paper>
-      </div>
-    </div>
+            <Textarea
+              autosize
+              minRows={4}
+              radius="md"
+              value={response.draft}
+              onChange={(e) => handleDraftChange(response.id, e.currentTarget.value)}
+              placeholder="Draft your response here..."
+              styles={{
+                input: {
+                  backgroundColor: '#f2f2f2',
+                  color: '#111',
+                  fontSize: '1.05rem',
+                  padding: '12px',
+                },
+              }}
+            />
+
+            <Group mt="md" position="right">
+              <Button
+                radius="xl"
+                color="orange"
+                size="md"
+                onClick={() => handleSave(response.id)}
+              >
+                Save
+              </Button>
+            </Group>
+          </Card>
+        ))}
+      </Stack>
+    </Box>
   );
 }
 
