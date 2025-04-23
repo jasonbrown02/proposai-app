@@ -34,8 +34,8 @@ import { auth } from '../firebase';
 function MainLayout({ children, colorScheme, toggleColorScheme }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const dark = colorScheme === 'dark';
   const theme = useMantineTheme();
+  const dark = theme.colorScheme === 'dark';
 
   const isActive = (path) => location.pathname === path;
 
@@ -50,29 +50,38 @@ function MainLayout({ children, colorScheme, toggleColorScheme }) {
     backgroundColor: isCTA
       ? theme.colors.orange[6]
       : active
-      ? '#ffffff'
+      ? dark
+        ? '#ffffff'
+        : '#000000'
       : 'transparent',
     color: isCTA
       ? '#ffffff'
       : active
-      ? theme.colors.gray[8]
-      : theme.colors.gray[0],
+      ? dark
+        ? theme.colors.gray[8]
+        : '#ffffff'
+      : dark
+      ? '#e5e5e5'
+      : '#424242',
     '& svg': {
       color: isCTA
         ? '#ffffff'
         : active
-        ? theme.colors.gray[8]
-        : theme.colors.gray[0],
+        ? dark
+          ? theme.colors.gray[8]
+          : '#ffffff'
+        : dark
+        ? '#e5e5e5'
+        : '#424242',
     },
     transition: 'all 0.2s ease',
     cursor: 'pointer',
-
     '&:hover': {
       backgroundColor: isCTA
         ? theme.colors.orange[5]
         : dark
         ? theme.colors.dark[5]
-        : theme.colors.gray[2],
+        : theme.colors.gray[1],
       color: isCTA ? '#ffffff' : theme.colors.orange[6],
       '& svg': {
         color: theme.colors.orange[6],
@@ -103,6 +112,8 @@ function MainLayout({ children, colorScheme, toggleColorScheme }) {
             flexDirection: 'column',
             height: '100vh',
             justifyContent: 'space-between',
+            backgroundColor: dark ? '#121212' : '#ffffff',
+            borderRight: `1px solid ${dark ? '#2c2c2c' : '#e0e0e0'}`,
           }}
         >
           <Box p="md">
@@ -114,9 +125,9 @@ function MainLayout({ children, colorScheme, toggleColorScheme }) {
                 size="sm"
                 styles={{
                   input: {
-                    backgroundColor: dark ? theme.colors.dark[4] : theme.colors.gray[0],
-                    color: dark ? theme.colors.gray[2] : theme.colors.gray[8],
-                    borderColor: dark ? theme.colors.gray[7] : theme.colors.gray[3],
+                    backgroundColor: dark ? theme.colors.dark[5] : theme.colors.gray[0],
+                    color: dark ? '#e5e5e5' : '#424242',
+                    borderColor: dark ? theme.colors.dark[6] : theme.colors.gray[3],
                   },
                 }}
               />

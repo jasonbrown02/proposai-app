@@ -10,6 +10,7 @@ import {
   Box,
   Paper,
   Flex,
+  useMantineTheme,
 } from '@mantine/core';
 
 const mockRFPs = [
@@ -31,16 +32,19 @@ const mockRFPs = [
   },
 ];
 
-const statusColors = {
-  'IN PROGRESS': 'orange',
-  SUBMITTED: 'green',
-};
-
 export default function Dashboard() {
+  const theme = useMantineTheme();
+  const isDark = theme.colorScheme === 'dark';
+
+  const statusColors = {
+    'IN PROGRESS': 'orange',
+    SUBMITTED: theme.other.colors.accent.green,
+  };
+
   return (
     <Box p="lg">
       <Group justify="space-between" align="center" mb="lg">
-        <Title order={2} style={{ color: 'var(--mantine-color-text)' }}>
+        <Title order={2} style={{ color: isDark ? theme.other.colors.text.default : theme.other.colors.text.dark }}>
           Active RFPs
         </Title>
       </Group>
@@ -53,31 +57,31 @@ export default function Dashboard() {
             radius="md"
             withBorder
             style={{
-              backgroundColor: 'var(--mantine-color-body)',
-              position: 'relative',
+              backgroundColor: isDark ? theme.other.colors.background.dark : theme.other.colors.background.light,
             }}
           >
             <Flex justify="space-between" align="flex-start" wrap="wrap">
               <Box>
-                <Title order={4} style={{ color: 'var(--mantine-color-text)' }}>
+                <Title order={4} style={{ color: isDark ? theme.other.colors.text.default : theme.other.colors.text.dark }}>
                   {rfp.title}
                 </Title>
-                <Text size="sm" mt={4} style={{ color: 'var(--mantine-color-text)' }}>
+                <Text size="sm" mt={4} style={{ color: isDark ? theme.other.colors.text.default : theme.other.colors.text.dark }}>
                   ID: {rfp.id} • {rfp.questions} Questions • Due {rfp.dueDate}
                 </Text>
-                <Text size="xs" mt={2} style={{ color: 'var(--mantine-color-text)' }}>
+                <Text size="xs" mt={2} style={{ color: isDark ? theme.colors.gray[5] : theme.colors.gray[7] }}>
                   Last Processed: {rfp.lastProcessed}
                 </Text>
               </Box>
 
               <Badge
-                color={statusColors[rfp.status]}
                 size="lg"
                 radius="xl"
                 style={{
                   alignSelf: 'flex-start',
                   fontWeight: 600,
                   marginTop: 4,
+                  backgroundColor: statusColors[rfp.status],
+                  color: 'white',
                 }}
               >
                 {rfp.status}

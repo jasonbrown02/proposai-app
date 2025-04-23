@@ -10,21 +10,15 @@ import CreateRFP from './pages/CreateRFP.jsx';
 import RFPResponses from './pages/RFPResponses.jsx';
 import UploadRFP from './pages/UploadRFP.jsx';
 import Auth from './pages/Auth.jsx';
-import Terms from './pages/Terms.jsx';         // ✅ Added
-import Privacy from './pages/Privacy.jsx';     // ✅ Added
+import Terms from './pages/Terms.jsx';
+import Privacy from './pages/Privacy.jsx';
 
 import MainLayout from './layouts/MainLayout.jsx';
-import { theme } from './theme.js';
+import { theme as customTheme } from './theme.js';
 import ButtonStyles from './styles/ButtonStyles.js';
 
 function App() {
   const [colorScheme, setColorScheme] = useState('dark');
-
-  const toggleColorScheme = (value) => {
-    const nextScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
-    setColorScheme(nextScheme);
-    localStorage.setItem('mantine-color-scheme', nextScheme);
-  };
 
   useEffect(() => {
     const saved = localStorage.getItem('mantine-color-scheme');
@@ -33,18 +27,24 @@ function App() {
     }
   }, []);
 
+  const toggleColorScheme = (value) => {
+    const next = typeof value === 'string' ? value : (colorScheme === 'dark' ? 'light' : 'dark');
+    setColorScheme(next);
+    localStorage.setItem('mantine-color-scheme', next);
+  };
+
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
-        theme={{ ...theme, colorScheme }}
+        key={colorScheme} // Force theme refresh
+        theme={{ ...customTheme, colorScheme }}
         styles={{ Button: ButtonStyles }}
       >
         <BrowserRouter>
           <Routes>
             <Route path="/auth" element={<Auth />} />
-
             <Route
               path="/"
               element={
@@ -93,8 +93,6 @@ function App() {
                 </MainLayout>
               }
             />
-
-            {/* ✅ New Legal Routes */}
             <Route
               path="/terms"
               element={
@@ -111,7 +109,6 @@ function App() {
                 </MainLayout>
               }
             />
-
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>

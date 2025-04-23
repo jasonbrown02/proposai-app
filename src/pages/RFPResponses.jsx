@@ -1,3 +1,4 @@
+// src/pages/RFPResponses.jsx
 import React from 'react';
 import {
   Stack,
@@ -34,13 +35,13 @@ export default function RFPResponses() {
   const isDark = theme.colorScheme === 'dark';
 
   const statusColors = {
-    WON: theme.colors.accent?.green || 'green',
-    ARCHIVED: theme.colors.gray?.[6] || 'gray',
+    WON: theme.other.colors.accent.green,
+    ARCHIVED: theme.colors.gray[6],
   };
 
   return (
     <Box p="lg">
-      <Title order={2} mb="lg" style={{ color: theme.colors.text?.default || (isDark ? '#f1f1f1' : '#1a1a1a') }}>
+      <Title order={2} mb="lg" style={{ color: isDark ? theme.other.colors.text.default : theme.other.colors.text.dark }}>
         Completed RFPs
       </Title>
 
@@ -52,22 +53,20 @@ export default function RFPResponses() {
             radius="md"
             withBorder
             style={{
-              backgroundColor: theme.colors.dark?.[7] || '#1e1e1e',
-              position: 'relative',
+              backgroundColor: isDark ? theme.other.colors.background.dark : theme.other.colors.background.light,
             }}
           >
             <Flex justify="space-between" align="flex-start" wrap="wrap">
               <Box>
-                <Title order={4} style={{ color: theme.colors.text?.default || (isDark ? '#f1f1f1' : '#1a1a1a') }}>
+                <Title order={4} style={{ color: isDark ? theme.other.colors.text.default : theme.other.colors.text.dark }}>
                   {rfp.title}
                 </Title>
-                <Text size="sm" mt={4} style={{ color: theme.colors.text?.subtle || (isDark ? '#888' : '#444') }}>
+                <Text size="sm" mt={4} style={{ color: isDark ? theme.colors.gray[5] : theme.colors.gray[7] }}>
                   ID: {rfp.id} • {rfp.questions} Questions • Submitted: {rfp.submitted}
                 </Text>
               </Box>
 
               <Badge
-                color={statusColors[rfp.status]}
                 size="lg"
                 radius="xl"
                 style={{
