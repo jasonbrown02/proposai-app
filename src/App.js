@@ -1,13 +1,18 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
+
 import Dashboard from './pages/Dashboard.jsx';
-import AISuggestions from './pages/AISuggestions.jsx';
-import Settings from './pages/Settings.jsx';
 import RFPEdit from './pages/RFPEdit.jsx';
 import TrainMyAI from './pages/TrainMyAI.jsx';
 import CreateRFP from './pages/CreateRFP.jsx';
 import RFPResponses from './pages/RFPResponses.jsx';
+import UploadRFP from './pages/UploadRFP.jsx';
+import Auth from './pages/Auth.jsx';
+import Terms from './pages/Terms.jsx';         // ✅ Added
+import Privacy from './pages/Privacy.jsx';     // ✅ Added
+
 import MainLayout from './layouts/MainLayout.jsx';
 import { theme } from './theme.js';
 import ButtonStyles from './styles/ButtonStyles.js';
@@ -34,12 +39,12 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
         theme={{ ...theme, colorScheme }}
-        styles={{
-          Button: ButtonStyles,
-        }}
+        styles={{ Button: ButtonStyles }}
       >
         <BrowserRouter>
           <Routes>
+            <Route path="/auth" element={<Auth />} />
+
             <Route
               path="/"
               element={
@@ -57,26 +62,18 @@ function App() {
               }
             />
             <Route
+              path="/upload-rfp"
+              element={
+                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                  <UploadRFP />
+                </MainLayout>
+              }
+            />
+            <Route
               path="/rfp-responses"
               element={
                 <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                   <RFPResponses />
-                </MainLayout>
-              }
-            />
-            <Route
-              path="/ai-suggestions"
-              element={
-                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-                  <AISuggestions />
-                </MainLayout>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-                  <Settings />
                 </MainLayout>
               }
             />
@@ -96,6 +93,25 @@ function App() {
                 </MainLayout>
               }
             />
+
+            {/* ✅ New Legal Routes */}
+            <Route
+              path="/terms"
+              element={
+                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                  <Terms />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <MainLayout colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                  <Privacy />
+                </MainLayout>
+              }
+            />
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>

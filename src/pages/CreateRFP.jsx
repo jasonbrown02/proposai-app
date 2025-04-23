@@ -1,124 +1,79 @@
+// src/pages/CreateRFP.jsx
+
 import React, { useState } from 'react';
 import {
-  Title,
-  TextInput,
-  Textarea,
-  Select,
-  Button,
   Box,
+  Button,
+  TextInput,
+  Title,
   Stack,
+  Paper,
+  Text,
+  Notification,
 } from '@mantine/core';
+import { IconAlertCircle, IconCheck } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateRFP() {
-  const [form, setForm] = useState({
-    title: '',
-    summary: '',
-    deadline: '',
-    submissionMethod: '',
-    contactName: '',
-    category: '',
-  });
+  const [projectName, setProjectName] = useState('');
+  const [summary, setSummary] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleChange = (field) => (event) => {
-    setForm((prev) => ({
-      ...prev,
-      [field]: event.target?.value || event,
-    }));
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleSubmit = () => {
-    console.log('Creating RFP:', form);
-    // Future: Add integration with Airtable or Make
+    if (!projectName.trim() || !summary.trim()) {
+      setError('Please fill out both the project name and summary.');
+      return;
+    }
+
+    setError('');
+
+    // Simulate save or call Airtable API here
+    console.log('Saving new RFP:', { projectName, summary });
+
+    // Navigate to Upload page
+    navigate('/upload-rfp');
   };
 
   return (
     <Box p="lg">
       <Title order={2} mb="lg" style={{ color: 'var(--mantine-color-text)' }}>
-        Create New RFP Response
+        Create New RFP Project
       </Title>
 
-      <Stack spacing="lg">
-        <TextInput
-          label="RFP Title"
-          placeholder="e.g. Website Redesign for City X"
-          value={form.title}
-          onChange={handleChange('title')}
-          size="lg"
-          styles={{ input: { backgroundColor: '#1e1e1e', color: '#e5e5e5' } }}
-        />
+      <Paper p="xl" radius="md" withBorder style={{ backgroundColor: 'var(--mantine-color-body)' }}>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing="md">
+            <TextInput
+              label="Project Name"
+              placeholder="e.g. City of Springfield Website Redesign"
+              value={projectName}
+              onChange={(e) => setProjectName(e.currentTarget.value)}
+              required
+            />
 
-        <Textarea
-          label="Summary"
-          placeholder="Short summary of the opportunity"
-          value={form.summary}
-          onChange={handleChange('summary')}
-          autosize
-          minRows={4}
-          size="lg"
-          styles={{ input: { backgroundColor: '#1e1e1e', color: '#e5e5e5' } }}
-        />
+            <TextInput
+              label="Short Summary"
+              placeholder="A short description of the RFP"
+              value={summary}
+              onChange={(e) => setSummary(e.currentTarget.value)}
+              required
+            />
 
-        <TextInput
-          label="Submission Deadline"
-          placeholder="e.g. 2025-04-30"
-          value={form.deadline}
-          onChange={handleChange('deadline')}
-          size="lg"
-          styles={{ input: { backgroundColor: '#1e1e1e', color: '#e5e5e5' } }}
-        />
+            {error && (
+              <Notification icon={<IconAlertCircle size={18} />} color="red" title="Missing Fields" withCloseButton onClose={() => setError('')}>
+                {error}
+              </Notification>
+            )}
 
-        <TextInput
-          label="Submission Method"
-          placeholder="e.g. Email to contact@example.com"
-          value={form.submissionMethod}
-          onChange={handleChange('submissionMethod')}
-          size="lg"
-          styles={{ input: { backgroundColor: '#1e1e1e', color: '#e5e5e5' } }}
-        />
-
-        <TextInput
-          label="Contact Name"
-          placeholder="e.g. John Smith"
-          value={form.contactName}
-          onChange={handleChange('contactName')}
-          size="lg"
-          styles={{ input: { backgroundColor: '#1e1e1e', color: '#e5e5e5' } }}
-        />
-
-        <Select
-          label="Category"
-          placeholder="Select category"
-          value={form.category}
-          onChange={handleChange('category')}
-          size="lg"
-          data={[
-            { value: 'web', label: 'Web Design' },
-            { value: 'branding', label: 'Branding' },
-            { value: 'logo', label: 'Logo Development' },
-            { value: 'other', label: 'Other' },
-          ]}
-          styles={{
-            input: {
-              backgroundColor: '#1e1e1e',
-              color: '#e5e5e5',
-            },
-            dropdown: {
-              backgroundColor: '#1e1e1e',
-            },
-          }}
-        />
-
-        <Button
-          onClick={handleSubmit}
-          size="lg"
-          fullWidth
-          color="blue"
-          radius="xl"
-          style={{ fontWeight: 600 }}
-        >
-          Save RFP
-        </Button>
-      </Stack>
+            <Button type="submit" radius="xl" color="orange">
+              Create Project
+            </Button>
+          </Stack>
+        </form>
+      </Paper>
     </Box>
   );
 }
